@@ -86,6 +86,9 @@ class Connect4Game {
 
 		const cell = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
 
+		// Ajouter la classe player${this.currentPlayer}-token-played à la cellule
+		cell.classList.add(`player${this.currentPlayer}-token-played`);
+
 		// Créez une nouvelle div pour la pièce
 		const pieceDiv = document.createElement('div');
 		pieceDiv.classList.add(`player${this.currentPlayer}-token`);
@@ -207,15 +210,11 @@ class Connect4Game {
 
 		switch (type) {
 			case 'horizontal':
-				const winningSegmentLeft = this.getHorizontalSegment(row, col, -1);
-				const winningSegmentRight = this.getHorizontalSegment(row, col, 1);
-
-				if (winningSegmentLeft && winningSegmentLeft.every(cell => cell.classList.contains(`player${this.currentPlayer}-token`))) {
-					winningCells.push(...winningSegmentLeft);
-				}
-
-				if (winningSegmentRight && winningSegmentRight.every(cell => cell.classList.contains(`player${this.currentPlayer}-token`))) {
-					winningCells.push(...winningSegmentRight);
+				for (let i = -1; i <= 1; i += 2) {
+					const winningSegment = this.getHorizontalSegment(row, col, i);
+					if (winningSegment && winningSegment.every(cell => cell.classList.contains(`player${this.currentPlayer}-token-played`))) {
+						winningCells.push(...winningSegment);
+					}
 				}
 				break;
 			case 'vertical':
@@ -226,12 +225,12 @@ class Connect4Game {
 			case 'diagonal':
 				for (let i = -1; i <= 1; i += 2) {
 					const winningSegment = this.getDiagonalSegment(row, col, i, 1);
-					if (winningSegment && winningSegment.every(cell => cell.classList.contains(`player${this.currentPlayer}-token`))) {
+					if (winningSegment && winningSegment.every(cell => cell.classList.contains(`player${this.currentPlayer}-token-played`))) {
 						winningCells.push(...winningSegment);
 					}
 
 					const otherWinningSegment = this.getDiagonalSegment(row, col, i, -1);
-					if (otherWinningSegment && otherWinningSegment.every(cell => cell.classList.contains(`player${this.currentPlayer}-token`))) {
+					if (otherWinningSegment && otherWinningSegment.every(cell => cell.classList.contains(`player${this.currentPlayer}-token-played`))) {
 						winningCells.push(...otherWinningSegment);
 					}
 				}
@@ -276,13 +275,13 @@ class Connect4Game {
 	applyBlinkAnimation(winningCells) {
 		// Apply blink class to the winning tokens
 		winningCells.forEach((cell) => {
-			cell.classList.add("blink");
+			cell.firstChild.classList.add("blink");
 		});
 
 		// Set a timeout to remove blink class after a duration
 		setTimeout(() => {
 			this.removeBlinkAnimation();
-		}, 4000); // Adjust the duration as needed
+		}, 2500); // Adjust the duration as needed
 	}
 
 	getCell(row, col) {
@@ -292,8 +291,10 @@ class Connect4Game {
 	}
 
 	removeBlinkAnimation() {
-		const winningCells = document.querySelectorAll(".winning-cell");
-		winningCells.forEach((cell) => cell.classList.remove("winning-cell"));
+		const blinkingElements = document.querySelectorAll(".blink");
+		blinkingElements.forEach((element) => {
+			element.classList.remove("blink");
+		});
 	}
 
 	isHorizontalWin(player, row) {
