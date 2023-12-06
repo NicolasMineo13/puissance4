@@ -7,27 +7,20 @@
     <link rel="stylesheet" href="style.css">
     <title>Puissance 4</title>
 </head>
-<body class="index">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <div class="title">
-        <span>PUISSANCE 4</span>
-    </div>
-    <div style="margin-top: 20px;">
-        <img style="width:85px" src="img/red_token.png">
-        <img style="width:85px" src="img/yellow_token.png">
-        <img style="width:85px" src="img/yellow_token.png">
-        <img style="width:85px" src="img/yellow_token.png">
-    </div>
-    <div style="margin-top: 40px;">
-        <button class="btnpuissance4 fs-32">Contre IA</button>
-        <button class="btnpuissance4 fs-32" style="margin-left: 40px;">Contre Joueur</button>
+<body>
+    <div class="d-flex flex-column align-items-center">
+        <div class="title mb-3">
+            <span>PUISSANCE 4</span>
+        </div>
+        <div class="mb-3">
+            <img style="width:85px" src="img/red_player.png">
+            <img style="width:85px" src="img/yellow_player.png">
+            <img style="width:85px" src="img/yellow_player.png">
+            <img style="width:85px" src="img/yellow_player.png">
+        </div>
+        <div>
+            <button class="btnpuissance4 fs-32" onclick="window.location='game.html'">Jouer</button>
+        </div>
     </div>
 </body>
-<script>
-    $(document).ready(function(){
-        $(".btnpuissance4").click(function(){
-            window.location.href = "game.html";
-        });
-    });
-</script>
 </html>

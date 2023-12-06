@@ -7,36 +7,27 @@
     <link rel="stylesheet" href="style.css">
     <title>Puissance 4</title>
 </head>
-<body class="game" style="">
-    <button id="replay-button" class="btn">Refaire une partie</button>
-
-
-
-
+<body class="game">
+    <button id="replay-button" class="btnpuissance4 visibilityhidden" style="margin-top:-60px">Rejouer</button>
     <div class="frame">
         <div id="left-panel" class="side-panel">
             <div class="screen">
-                <img src="img/yellow_token.png" alt="">
+                <img id="player1-panel" src="img/yellow_player.png" alt="">
             </div>
             <span class="player-label">Joueur 1</span>
         </div>
         <span id="player1-turn" class="text-below visibilityhidden">À votre tour</span>
     </div>
-
     <div id="game-board"></div>
-
     <div class="frame">
         <div id="right-panel" class="side-panel">
             <div class="screen">
-                <img src="img/red_token.png" alt="">
+                <img id="player2-panel" src="img/red_player.png" alt="">
             </div>
             <span class="player-label">Joueur 2</span>
         </div>
         <span id="player2-turn" class="text-below visibilityhidden">À votre tour</span>
     </div>
-
-
-
     <script src="script.js"></script>
 </body>
 </html>

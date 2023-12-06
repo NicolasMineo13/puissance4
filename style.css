@@ -13,14 +13,14 @@ body {
 .index {
 	display: flex;
 	flex-direction: column;
-	align-items: center; /* Pour centrer le contenu horizontalement */
-	margin: 20px; /* Marge pour l'espace autour du contenu */
+	align-items: center;
+	margin: 20px;
 }
 
 .title {
 	font-size: 128px;
 	font-weight: bold;
-	color: #ffb510; /* Blue color, you can change this */
+	color: #ffb510;
 	text-shadow: 0 0 10px black;
 }
 
@@ -29,18 +29,50 @@ body {
 	grid-template-columns: repeat(7, 80px);
 	grid-template-rows: repeat(6, 80px);
 	gap: 5px;
-	border: 10px solid #28159b; /* Bordure épaisse pour un effet 3D */
+	border: 10px solid #28159b;
 	padding: 20px;
-	background-color: #7661d1; /* Dégradé pour un effet de profondeur */
+	background-color: #7661d1;
 	border-radius: 15px;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Ombre plus prononcée */
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 #replay-button {
 	position: absolute;
-	top: 100px; /* Adjust the top position as needed */
+	top: 100px;
 	left: 50%;
 	transform: translateX(-50%);
+}
+
+.blink {
+	animation: blinkAnimation 0.5s infinite alternate;
+}
+
+@keyframes blinkAnimation {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.falling-piece {
+	animation-name: fallAnimation;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-in-out;
+	box-shadow: none;
+	transform: translateY(-100vh);
+}
+
+@keyframes fallAnimation {
+	0% {
+		transform: translateY(-100vh);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
 }
 
 .cell {
@@ -54,59 +86,56 @@ body {
 	cursor: pointer;
 	position: relative;
 	background-color: #180756;
-	box-shadow: inset 10px 0 0 0 #2a27a0; /* Ajuster les valeurs pour l'effet souhaité */
-	transform: rotate(
-		-90deg
-	); /* Ajustez l'angle de rotation selon vos besoins */
+	box-shadow: inset 0 -10px 0 0 #2a27a0;
 }
 
-.cell::after {
-	content: "";
-	position: absolute;
-	width: 80px; /* Largeur du jeton */
-	height: 80px; /* Hauteur du jeton */
-	border-radius: 50%; /* Rend le jeton circulaire */
-	left: 50%; /* Centrer horizontalement */
-	top: 50%; /* Centrer verticalement */
-	transform: translate(-50%, -50%); /* Ajuste la position au centre */
+.player1-token,
+.player2-token {
+	box-shadow: none;
+	transform: rotate(0deg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	display: flex;
 }
 
-.player1::after {
-	background-image: url("yellow_token-removebg-preview.png");
-	background-size: cover; /* Ajuster la taille de l'image pour couvrir la cellule */
-	background-repeat: no-repeat; /* Empêcher la répétition de l'image */
-	background-position: center; /* Centrer l'image */
+.player1-token {
+	background-image: url("img/yellow_token.png");
 }
 
-.player2::after {
-	background-image: url("red_token-removebg-preview.png");
-	background-size: cover; /* Ajuster la taille de l'image pour couvrir la cellule */
-	background-repeat: no-repeat; /* Empêcher la répétition de l'image */
-	background-position: center; /* Centrer l'image */
+.player2-token {
+	background-image: url("img/red_token.png");
 }
 
 .end {
 	left: 50%;
-	color: blue; /* Game over in blue */
+	color: blue;
 }
 
 .frame {
 	display: inline-block;
-	width: 10%; /* Adjust the width as needed */
+	width: 10%;
 	margin: 150px;
 	box-sizing: border-box;
-	border: 10px solid #28159b; /* Border color */
+	border: 10px solid #28159b;
 	border-radius: 10px;
 	text-align: center;
-	position: relative; /* Add position relative to the frame */
+	position: relative;
 }
 
 .text-below {
 	display: block;
 	width: 100%;
 	text-align: center;
-	margin-top: 30px; /* Adjust this value as needed to control the space between the frame and text */
-	margin-bottom: -60px; /* Use negative margin to extend below the frame */
+	margin-top: 30px;
+	margin-bottom: -60px;
+	white-space: nowrap;
 	color: white;
 	font-size: 20px;
 }
@@ -118,8 +147,8 @@ body {
 
 .screen {
 	width: 100%;
-	height: 200px; /* Adjust the height of the screen */
-	background-color: #180756; /* Screen color */
+	height: 200px;
+	background-color: #180756;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -132,7 +161,7 @@ body {
 .player-label {
 	font-size: 25px;
 	font-weight: bold;
-	color: #28159b; /* Player label color */
+	color: #28159b;
 	padding: 10px;
 	display: block;
 }
@@ -155,7 +184,7 @@ body {
 
 .btnpuissance4 {
 	background: linear-gradient(to bottom, #321699, #170e77);
-	border: 2px solid #7661d1; /* Border color */
+	border: 2px solid #7661d1;
 	border-radius: 50px;
 	color: white;
 	text-decoration: none;
@@ -165,7 +194,7 @@ body {
 }
 
 .btnpuissance4:hover {
-	background-color: #28159b;
+	background: #28159b;
 	color: white;
 	text-decoration: none;
 }
