@@ -1,0 +1,1 @@
+initializeBoard(6, 7);
