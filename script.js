@@ -16,6 +16,10 @@ class Connect4Game {
 		if (this.currentPlayer === null)
 			this.currentPlayer = 2;
 
+		// Set CSS variables for grid-template-columns and grid-template-rows
+		this.gameBoard.style.setProperty('--cols', this.cols);
+		this.gameBoard.style.setProperty('--rows', this.rows);
+
 		for (let i = 0; i < this.rows; i++) {
 			this.boardState.push(Array(this.cols).fill(0));
 			for (let j = 0; j < this.cols; j++) {
@@ -74,7 +78,7 @@ class Connect4Game {
 
 	handleMove(col) {
 		// Check if the game has been won
-		if (this.gameWon) {
+		if (this.gameWon || this.animationInProgress) {
 			return;
 		}
 
@@ -96,6 +100,8 @@ class Connect4Game {
 
 		// Ajoutez la nouvelle div à côté de la cellule principale
 		cell.insertAdjacentElement('afterbegin', pieceDiv);
+
+		this.animationInProgress = true;
 
 		// Ajoutez un gestionnaire d'événements pour l'événement 'animationend'
 		pieceDiv.addEventListener('animationend', () => {
@@ -132,11 +138,16 @@ class Connect4Game {
 
 				this.applyBlinkAnimation(winResult.cells); // Show the replay button
 				this.showReplayButton(); // Show the replay button
+
+				this.animationInProgress = false;
+
 				return;
 			}
 
 			if (this.isBoardFull()) {
 				this.showReplayButton(); // Show the replay button
+
+				this.animationInProgress = false;
 				return;
 			}
 
@@ -160,6 +171,9 @@ class Connect4Game {
 				player1Panel.classList.remove("blink");
 				player2Panel.classList.add("blink");
 			}
+
+			this.animationInProgress = false;
+
 		}, { once: true });
 
 	}

@@ -26,8 +26,8 @@ body {
 
 #game-board {
 	display: grid;
-	grid-template-columns: repeat(7, 80px);
-	grid-template-rows: repeat(6, 80px);
+	grid-template-columns: repeat(var(--cols, 7), 80px);
+	grid-template-rows: repeat(var(--rows, 6), 80px);
 	gap: 5px;
 	border: 10px solid #28159b;
 	padding: 20px;
@@ -57,7 +57,7 @@ body {
 	}
 }
 
-.falling-piece {
+/* .falling-piece {
 	animation-name: fallAnimation;
 	animation-duration: 0.5s;
 	animation-timing-function: ease-in-out;
@@ -73,7 +73,39 @@ body {
 	100% {
 		transform: translateY(0);
 	}
+} */
+
+.falling-piece {
+	animation-name: fallAnimation;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-in-out;
+	box-shadow: none;
+	opacity: 0;
+	/* Commencez avec une opacité à 0 pour l'effet d'entrée */
+	transform: translateY(-100vh) translateZ(0);
+	/* Ajustez la translation pour l'effet d'entrée */
+	position: absolute;
+	z-index: 2;
 }
+
+@keyframes fallAnimation {
+	0% {
+		opacity: 0;
+		transform: translateY(-100vh) translateZ(0);
+	}
+
+	50% {
+		opacity: 0.8;
+		/* Ajustez l'opacité à mi-chemin pour l'effet d'entrée */
+		transform: translateY(0) translateZ(0);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0) translateZ(0);
+	}
+}
+
 
 .cell {
 	width: 80px;
