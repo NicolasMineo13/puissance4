@@ -45,7 +45,7 @@ QUnit.test("resetBoard function test", function (assert) {
     assert.strictEqual(gameBoard.style.getPropertyValue('--cols'), cols.toString(), "Cols are set correctly");
     assert.strictEqual(boardState.length, rows, "Board state rows are initialized correctly");
     assert.strictEqual(boardState[0].length, cols, "Board state cols are initialized correctly");
-    assert.strictEqual(timing, 30, "Timing is set correctly");
+    assert.strictEqual(timing, 0, "Timing is set correctly");
 });
 
 QUnit.test("isBoardFull function test", function (assert) {
@@ -90,6 +90,20 @@ QUnit.test("getAvailableRow function test", function (assert) {
     const unavailableRow = getAvailableRow(1, rows);
 
     assert.strictEqual(unavailableRow, -1, "No available row when the column is full");
+});
+
+// TEst pour le changement de joueur
+QUnit.test("swapPlayerTurn function test", function (assert) {
+
+    currentPlayer = 1;
+
+    swapPlayerTurn(currentPlayer);
+
+    assert.strictEqual(currentPlayer, 2, "Current player is changed to 2");
+
+    swapPlayerTurn(currentPlayer);
+
+    assert.strictEqual(currentPlayer, 1, "Current player is changed to 1");
 });
 
 QUnit.test("blinkPlayerTurn function test", function (assert) {

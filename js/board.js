@@ -7,10 +7,6 @@ function initializeBoard(rows_param, cols_param, simulate_param = false) {
     gameWon = false;
     player1Turn.innerHTML = "À votre tour";
     player2Turn.innerHTML = "À votre tour";
-    buttonSimulateHorizontal.addEventListener("click", simulateHorizontalWin);
-    buttonSimulateVertical.addEventListener("click", simulateVerticalWin);
-    buttonSimulateDiagonal.addEventListener("click", simulateDiagonalWin);
-    buttonSimulateFullBoard.addEventListener("click", simulateFullBoard);
 
     for (let i = 0; i < rows; i++) {
         boardState.push(Array(cols).fill(0));
@@ -26,8 +22,6 @@ function initializeBoard(rows_param, cols_param, simulate_param = false) {
 
     if (!simulate_param)
         blinkPlayerTurn(currentPlayer);
-
-    replayButton.addEventListener("click", () => resetBoard(rows, cols));
 }
 
 function createCell(row_param, col_param) {
@@ -40,13 +34,38 @@ function createCell(row_param, col_param) {
     return cell;
 }
 
+function viderPlateau(rows_param, cols_param) {
+    if (animationInProgress || simulationInProgress) {
+        return;
+    }
+
+    animationInProgress = true;
+
+    const playerTokens = document.querySelectorAll("[class^='player'][class$='-token']");
+
+    for (let i = 0; i < playerTokens.length; i++) {
+        playerTokens[i].classList.add("falling-piece-reset");
+    }
+
+    setTimeout(() => {
+        resetBoard(rows_param, cols_param);
+        animationInProgress = false;
+    }, 750);
+
+}
+
 function resetBoard(rows_param, cols_param, simulate_param = false) {
+    if (simulationInProgress) {
+        console.log("Simulation en cours, impossible de réinitialiser le plateau.");
+        return;
+    }
+
     gameBoard.innerHTML = "";
     replayButton.classList.add("visibilityhidden");
     winMessage.classList.add("visibilityhidden");
     winMessage.innerHTML = "";
     removeBlinkAnimation();
-    timing = 30;
+    timing = 0;
     initializeBoard(rows_param, cols_param, simulate_param);
 }
 

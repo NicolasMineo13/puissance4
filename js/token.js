@@ -1,5 +1,3 @@
-let animationInProgress = false;
-
 function placeToken(col_param, simulate_param = false) {
     if (gameWon || animationInProgress) {
         return;
@@ -70,11 +68,7 @@ function placeToken(col_param, simulate_param = false) {
             return;
         }
 
-        // Switch to the other player
-        currentPlayer = currentPlayer === 1 ? 2 : 1;
-
-        if (!simulate_param)
-            blinkPlayerTurn(currentPlayer);
+        swapPlayerTurn(currentPlayer, simulate_param);
 
         animationInProgress = false;
 

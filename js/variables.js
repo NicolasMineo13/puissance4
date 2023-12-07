@@ -9,8 +9,10 @@ let buttonSimulateHorizontal = document.getElementById("button-simulatehorizonta
 let buttonSimulateVertical = document.getElementById("button-simulatevertical");
 let buttonSimulateDiagonal = document.getElementById("button-simulatediagonal");
 let buttonSimulateFullBoard = document.getElementById("button-simulatefullboard");
+let buttonReset = document.getElementById("button-reset");
 let rows, cols, currentPlayer, boardState, gameWon;
 let timing = 0;
 let timingIncrement = 150;
 let simulationInProgress = false;
 let direction = 0;
+let animationInProgress = false;
