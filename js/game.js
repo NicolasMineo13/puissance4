@@ -2,7 +2,6 @@ function checkWin(player_param, row_param, col_param) {
     const horizontalWin = isHorizontalWin(player_param, row_param);
     const verticalWin = isVerticalWin(player_param, col_param);
     const diagonalWin = isDiagonalWin(player_param, row_param, col_param);
-
     if (horizontalWin) {
         return { type: 'horizontal', cells: getWinningCells(row_param, col_param, 'horizontal') };
     } else if (verticalWin) {
@@ -10,7 +9,6 @@ function checkWin(player_param, row_param, col_param) {
     } else if (diagonalWin) {
         return { type: 'diagonal', cells: getWinningCells(row_param, col_param, 'diagonal') };
     }
-
     return false;
 }
 
@@ -74,7 +72,6 @@ function isInBounds(row_param, col_param) {
 
 function getWinningCells(row_param, col_param, type_param) {
     const winningCells = [];
-
     switch (type_param) {
         case 'horizontal':
             for (let i = -1; i <= 1; i += 2) {
@@ -105,13 +102,11 @@ function getWinningCells(row_param, col_param, type_param) {
         default:
             break;
     }
-
     return winningCells;
 }
 
 function getHorizontalSegment(row_param, col_param, colDirection_param) {
     const segment = [];
-
     for (let i = 0; i < 4; i++) {
         const currentCol = col_param + i * colDirection_param;
         if (!isInBounds(row_param, currentCol)) {
@@ -119,13 +114,11 @@ function getHorizontalSegment(row_param, col_param, colDirection_param) {
         }
         segment.push(getCell(row_param, currentCol));
     }
-
     return segment;
 }
 
 function getDiagonalSegment(row_param, col_param, rowDirection_param, colDirection_param) {
     const segment = [];
-
     for (let i = 0; i < 4; i++) {
         const currentRow = row_param + i * rowDirection_param;
         const currentCol = col_param + i * colDirection_param;
@@ -134,16 +127,19 @@ function getDiagonalSegment(row_param, col_param, rowDirection_param, colDirecti
         }
         segment.push(getCell(currentRow, currentCol));
     }
-
     return segment;
 }
 
 function getCell(row_param, col_param) {
-    return document.querySelector(
-        `[data-row='${row_param}'][data-col='${col_param}']`
-    );
+    return document.getElementById(`cell-${row_param}-${col_param}`);
 }
 
 function showReplayButton() {
     replayButton.classList.remove("visibilityhidden");
+    simulationInProgress = false;
+    gameBoard.style.pointerEvents = "auto";
+    buttonSimulateHorizontal.addEventListener("click", simulateHorizontalWin);
+    buttonSimulateVertical.addEventListener("click", simulateVerticalWin);
+    buttonSimulateDiagonal.addEventListener("click", simulateDiagonalWin);
+    buttonSimulateFullBoard.addEventListener("click", simulateFullBoard);
 }

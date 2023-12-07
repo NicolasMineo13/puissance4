@@ -112,7 +112,7 @@ body {
 
 .falling-piece {
 	animation-name: fallAnimation;
-	animation-duration: 0.5s;
+	animation-duration: 0.3s;
 	animation-timing-function: ease-in-out;
 	box-shadow: none;
 	opacity: 0;
@@ -123,7 +123,7 @@ body {
 
 .falling-piece-simulate {
 	animation-name: fallAnimation;
-	animation-duration: 0.01s;
+	animation-duration: 0.1s;
 	animation-timing-function: ease-in-out;
 	box-shadow: none;
 	opacity: 0;
@@ -137,12 +137,6 @@ body {
 	0% {
 		opacity: 0;
 		transform: translateY(-100vh) translateZ(0);
-	}
-
-	50% {
-		opacity: 0.8;
-		/* Ajustez l'opacité à mi-chemin pour l'effet d'entrée */
-		transform: translateY(0) translateZ(0);
 	}
 
 	100% {

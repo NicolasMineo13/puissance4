@@ -7,6 +7,10 @@ function initializeBoard(rows_param, cols_param, simulate_param = false) {
     gameWon = false;
     player1Turn.innerHTML = "À votre tour";
     player2Turn.innerHTML = "À votre tour";
+    buttonSimulateHorizontal.addEventListener("click", simulateHorizontalWin);
+    buttonSimulateVertical.addEventListener("click", simulateVerticalWin);
+    buttonSimulateDiagonal.addEventListener("click", simulateDiagonalWin);
+    buttonSimulateFullBoard.addEventListener("click", simulateFullBoard);
 
     for (let i = 0; i < rows; i++) {
         boardState.push(Array(cols).fill(0));
@@ -28,6 +32,7 @@ function initializeBoard(rows_param, cols_param, simulate_param = false) {
 
 function createCell(row_param, col_param) {
     const cell = document.createElement("div");
+    cell.id = "cell-" + row_param + "-" + col_param;
     cell.classList.add("cell");
     cell.dataset.row = row_param;
     cell.dataset.col = col_param;

@@ -13,10 +13,8 @@ function placeToken(col_param, simulate_param = false) {
 
     const cell = document.querySelector(`[data-row='${row}'][data-col='${col_param}']`);
 
-    // Ajouter la classe player${currentPlayer}-token-played à la cellule
     cell.classList.add(`player${currentPlayer}-token-played`);
 
-    // Créez une nouvelle div pour la pièce
     const pieceDiv = document.createElement('div');
     pieceDiv.classList.add(`player${currentPlayer}-token`);
 
@@ -26,14 +24,11 @@ function placeToken(col_param, simulate_param = false) {
         pieceDiv.classList.add('falling-piece');
     }
 
-    // Ajoutez la nouvelle div à côté de la cellule principale
     cell.insertAdjacentElement('afterbegin', pieceDiv);
 
     animationInProgress = true;
 
-    // Ajoutez un gestionnaire d'événements pour l'événement 'animationend'
     pieceDiv.addEventListener('animationend', () => {
-        // Retirez la classe falling-piece après l'animation
 
         if (simulate_param) {
             pieceDiv.classList.remove('falling-piece-simulate');
@@ -41,13 +36,12 @@ function placeToken(col_param, simulate_param = false) {
             pieceDiv.classList.remove('falling-piece');
         }
 
-        // Update the board state
         boardState[row][col_param] = currentPlayer;
 
         const winResult = checkWin(currentPlayer, row, col_param);
 
         if (winResult) {
-            gameWon = true; // Set the game as won
+            gameWon = true;
 
             player1Turn.classList.add("visibilityhidden");
             player2Turn.classList.add("visibilityhidden");
@@ -55,7 +49,7 @@ function placeToken(col_param, simulate_param = false) {
             player1Panel.classList.remove("blink");
             player2Panel.classList.remove("blink");
 
-            applyBlinkAnimation(winResult.cells); // Show the replay button
+            applyBlinkAnimation(winResult.cells);
 
             animationInProgress = false;
 
@@ -63,7 +57,7 @@ function placeToken(col_param, simulate_param = false) {
         }
 
         if (isBoardFull(rows, cols)) {
-            showReplayButton(); // Show the replay button
+            showReplayButton();
             winMessage.innerHTML = "Match nul !";
             winMessage.classList.remove("visibilityhidden");
 
