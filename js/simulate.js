@@ -1,5 +1,5 @@
 var timing = 30;
-const timingIncrement = 50;
+const timingIncrement = 75;
 var simulationInProgress = false;
 
 function simulateHorizontalWin() {
@@ -132,8 +132,11 @@ function simulateDiagonalWin() { // Comme horizontal mais avec les diagonales
 
     currentPlayer = Math.floor(Math.random() * 2) + 1;
 
+    console.log("Joueur : " + currentPlayer);
+
     const direction = Math.floor(Math.random() * 2) + 1;
 
+    console.log("Direction : " + direction);
 
     if (direction == 1) {
         // La col est entre 0 et 3
