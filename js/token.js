@@ -49,8 +49,6 @@ function placeToken(col_param, simulate_param = false) {
 
             applyBlinkAnimation(winResult.cells);
 
-            animationInProgress = false;
-
             return;
         }
 
@@ -85,6 +83,7 @@ function applyBlinkAnimation(winningCells_param) {
         winMessage.innerHTML = `Le Joueur ${currentPlayer} a gagné !`;
         winMessage.classList.remove("visibilityhidden");
         showReplayButton();
+        animationInProgress = false;
     }, 2500);
 }
 
