@@ -1,95 +1,173 @@
-# Documentation du Projet Puissance 4
+# FR
 
-## Introduction
+## Puissance 4
 
-Le projet Puissance 4 est une implémentation en JavaScript du célèbre jeu de stratégie « Puissance 4 ». Il a été conçu pour être utilisé dans un environnement web et offre des fonctionnalités telles que la simulation de parties, des tests unitaires et une interface utilisateur interactive.
+### Introduction
 
-## Architecture
+Le projet Puissance 4 est une implémentation en JavaScript du célèbre jeu de stratégie « Puissance 4 ». Il a été conçu pour être utilisé dans un environnement web et offre des fonctionnalités telles que la simulation de parties, des tests unitaires et une interface utilisateur interactive.
 
-### 1. **Variables (`variables.js`)**
+### Architecture
+
+#### 1. Variables (`variables.js`)
 
 Le fichier `variables.js` contient les variables globales utilisées dans le projet.
 
-### 2. **Plateau (`board.js`)**
+#### 2. Plateau (`board.js`)
 
-Le fichier `board.js` contient les fonctions liées à la gestion du plateau de jeu. Les principales fonctionnalités comprennent l'initialisation du plateau, la création de cellules, la réinitialisation du plateau, la vérification de la condition de plateau plein et la recherche de la première ligne disponible dans une colonne.
+Le fichier `board.js` contient les fonctions liées à la gestion du plateau de jeu. Les principales fonctionnalités comprennent :
 
-- `initializeBoard(rows_param, cols_param, simulate_param)`: Initialise le plateau de jeu avec un nombre spécifié de lignes et de colonnes.
-- `createCell(row_param, col_param)`: Crée un élément de cellule HTML avec les coordonnées spécifiées.
-- `viderPlateau(rows_param, cols_param)`: Vide le plateau de jeu avec une animation.
-- `resetBoard(rows_param, cols_param, simulate_param)`: Réinitialise le plateau de jeu avec les paramètres spécifiés.
-- `isBoardFull(rows_param, cols_param)`: Vérifie si le plateau de jeu est entièrement rempli.
-- `getAvailableRow(col_param, rows_param)`: Retourne la première ligne disponible dans une colonne donnée.
+* `initializeBoard(rows_param, cols_param, simulate_param)` : Initialise le plateau de jeu avec un nombre spécifié de lignes et de colonnes.
+* `createCell(row_param, col_param)` : Crée un élément de cellule HTML avec les coordonnées spécifiées.
+* `viderPlateau(rows_param, cols_param)` : Vide le plateau de jeu avec une animation.
+* `resetBoard(rows_param, cols_param, simulate_param)` : Réinitialise le plateau de jeu avec les paramètres spécifiés.
+* `isBoardFull(rows_param, cols_param)` : Vérifie si le plateau est entièrement rempli.
+* `getAvailableRow(col_param, rows_param)` : Retourne la première ligne disponible dans une colonne donnée.
 
-### 3. **Jeu (`game.js`)**
+#### 3. Jeu (`game.js`)
 
-Le fichier `game.js` contient les fonctions liées à la gestion du jeu. Les principales fonctionnalités comprennent la gestion des tours des joueurs, la vérification des conditions de victoire et la gestion des messages de victoire ou de match nul.
+Le fichier `game.js` contient les fonctions liées à la gestion du jeu. Les principales fonctionnalités :
 
-- `checkWin(player_param, row_param, col_param)`: Vérifie les conditions de victoire, renvoie le résultat et met à jour le message de victoire.
-- `isHorizontalWin(player_param, row_param)`: Vérifie la condition de victoire à l'horizontale.
-- `isVerticalWin(player_param, col_param)`: Vérifie la condition de victoire à la verticale.
-- `isDiagonalWin(player_param, row_param, col_param)`: Vérifie la condition de victoire en diagonale.
-- `checkDiagonalSegment(player_param, row_param, col_param, rowDirection_param, colDirection_param)`: Vérifie quelle est la direction de la diagonale gagnante.
-- `isInBounds(row_param, col_param)`: Vérifie si les coordonnées spécifiées sont dans les limites du plateau de jeu.
-- `getWinningCells(row_param, col_param, type_param)`: Retourne les cellules gagnantes pour une direction donnée.
-- `getHorizontalSegment(row_param, col_param, colDirection_param)`: Retourne les cellules gagnantes pour une direction horizontale donnée.
-- `getDiagonalSegment(row_param, col_param, rowDirection_param, colDirection_param)`: Retourne les cellules gagnantes pour une direction diagonale donnée.
-- `getCell(row_param, col_param)`: Retourne la cellule spécifiée.
-- `showReplayButton()`: Affiche le bouton de rejouer.
+* `checkWin(player_param, row_param, col_param)` : Vérifie les conditions de victoire et met à jour le message de victoire.
+* `isHorizontalWin(player_param, row_param)` : Vérifie la condition de victoire horizontale.
+* `isVerticalWin(player_param, col_param)` : Vérifie la condition de victoire verticale.
+* `isDiagonalWin(player_param, row_param, col_param)` : Vérifie la condition de victoire diagonale.
+* `checkDiagonalSegment(...)` : Vérifie la direction de la diagonale gagnante.
+* `isInBounds(row_param, col_param)` : Vérifie si les coordonnées sont dans les limites.
+* `getWinningCells(...)`, `getHorizontalSegment(...)`, `getDiagonalSegment(...)`, `getCell(...)` : Gèrent les cellules gagnantes.
+* `showReplayButton()` : Affiche le bouton de rejouer.
 
-### 4. **Jetons (`token.js`)**
+#### 4. Jetons (`token.js`)
 
-Le fichier `token.js` gère l'animation des jetons lorsqu'ils sont placés sur le plateau.
+Gère l’animation des jetons lorsqu’ils sont placés sur le plateau :
 
-- `placeToken(col_param, simulate_param)`: Place un jeton dans la colonne spécifiée avec une animation.
-- `applyBlinkAnimation(winningCells_param)`: Applique une animation de clignotement aux cellules gagnantes.
-- `removeBlinkAnimation()`: Supprime l'animation de clignotement des cellules.
+* `placeToken(col_param, simulate_param)` : Place un jeton dans la colonne avec animation.
+* `applyBlinkAnimation(winningCells_param)` : Anime les cellules gagnantes.
+* `removeBlinkAnimation()` : Supprime l’animation.
 
-### 5. **Joueurs (`player.js`)**
+#### 5. Joueurs (`player.js`)
 
-Le ficier `player.js` gère le tour des joueurs.
+Gère le tour des joueurs :
 
-- `switchPlayer(player_param, simulate_param)`: Passe au joueur suivant.
-- `blinkPlayerTurn(player_param)`: Fait clignoter le joueur qui doit jouer et fait déclignoter l'autre.
+* `switchPlayer(player_param, simulate_param)` : Passe au joueur suivant.
+* `blinkPlayerTurn(player_param)` : Fait clignoter le joueur actif.
 
-### 6. **Simulation (`simulate.js`)**
+#### 6. Simulation (`simulate.js`)
 
-Le fichier `simulate.js` permet la simulation de différentes conditions de victoire et de situations de jeu.
+Permet de simuler différentes conditions de victoire et situations :
 
-- `simulateHorizontalWin()`: Simule une victoire horizontale.
-- `simulateVerticalWin()`: Simule une victoire verticale.
-- `simulateDiagonalWin()`: Simule une victoire diagonale.
-- `simulateFullBoard()`: Simule un plateau de jeu entièrement rempli.
-- `launchSimulation()`: Initialise une simulation en réinitialisant le plateau.
-- `simulatePlaceToken(col_param)`: Simule le placement d'un jeton dans la colonne spécifiée.
+* `simulateHorizontalWin()`, `simulateVerticalWin()`, `simulateDiagonalWin()` : Simulent différentes victoires.
+* `simulateFullBoard()` : Simule un plateau plein.
+* `launchSimulation()` : Initialise une simulation.
+* `simulatePlaceToken(col_param)` : Simule le placement d’un jeton.
 
-## Tests Unitaires
+### Tests Unitaires
 
-Le projet intègre des tests unitaires à l'aide de `QUnit` pour garantir le bon fonctionnement des différentes fonctions essentielles.
+Le projet utilise `QUnit` pour tester :
 
-- Tests pour l'initialisation du plateau, la création de cellules et la réinitialisation.
-- Tests pour vérifier la condition de plateau plein.
-- Tests pour la recherche de la première ligne disponible dans une colonne.
-- Tests pour le changement de joueur et son clignotement.
-- Tests pour les différentes conditions de victoire.
-- Tests pour l'affichage du bouton rejouer.
+* L’initialisation et la réinitialisation du plateau.
+* La condition de plateau plein.
+* La recherche de la première ligne disponible.
+* Le changement de joueur et son clignotement.
+* Les conditions de victoire.
+* L’affichage du bouton rejouer.
 
-## Interface Utilisateur
+### Interface Utilisateur
 
-L'interface utilisateur est conçue pour être conviviale et interactive. Elle offre la possibilité de jouer, de simuler des scénarios de victoire, et de refaire une partie tout ça avec de belles animations et un thème sombre et élégant.
+L’interface est conviviale et interactive, avec des animations et un thème sombre. Elle permet de jouer, simuler des victoires et recommencer une partie.
 
-## Utilisation
+### Utilisation
 
-1. **Initialisation du Jeu**:
-   - Ouvrir le fichier `index.html` du dossier `html` dans un navigateur web.
-   - Cliquer sur le bouton `Jouer` pour commencer la partie.
-2. **Interactions Utilisateur**:
-   - Placer un jeton en cliquant sur une colonne.
-   - Observer les animations.
-   - Observer les messages de victoire ou de match nul.
-   - Cliquer sur le bouton `Rejouer` pour recommencer une partie.
-   - Cliquer sur le bouton `Vider le plateau` pour vider le plateau.
-3. **Simulation (Optionnel)**:
-   - Utiliser les boutons de simulation pour tester différentes conditions de jeu.
-4. **Tests Unitaires (Optionnel)**:
-   - Ouvrir la page HTML des tests QUnit pour vérifier la conformité des fonctions.
+1. **Initialisation du jeu** : Ouvrir `index.html` dans un navigateur, cliquer sur `Jouer`.
+2. **Interactions** : Cliquer sur une colonne pour placer un jeton, observer animations et messages de victoire ou match nul.
+3. **Rejouer / Vider le plateau** : Boutons pour recommencer ou vider le plateau.
+4. **Simulation** : Utiliser les boutons de simulation pour tester différentes conditions.
+5. **Tests Unitaires** : Ouvrir la page HTML des tests QUnit.
+
+---
+
+# EN
+
+## Connect 4
+
+### Introduction
+
+The Connect 4 project is a JavaScript implementation of the popular strategy game “Connect 4.” It is designed for web environments and provides features such as game simulation, unit testing, and an interactive user interface.
+
+### Architecture
+
+#### 1. Variables (`variables.js`)
+
+The `variables.js` file contains global variables used throughout the project.
+
+#### 2. Board (`board.js`)
+
+The `board.js` file contains functions for managing the game board. Main functionalities:
+
+* `initializeBoard(rows_param, cols_param, simulate_param)`: Initializes the game board with a specified number of rows and columns.
+* `createCell(row_param, col_param)`: Creates an HTML cell element with specified coordinates.
+* `viderPlateau(rows_param, cols_param)`: Clears the board with an animation.
+* `resetBoard(rows_param, cols_param, simulate_param)`: Resets the board with specified parameters.
+* `isBoardFull(rows_param, cols_param)`: Checks if the board is completely full.
+* `getAvailableRow(col_param, rows_param)`: Returns the first available row in a given column.
+
+#### 3. Game (`game.js`)
+
+Contains game management functions:
+
+* `checkWin(player_param, row_param, col_param)`: Checks win conditions and updates win message.
+* `isHorizontalWin(player_param, row_param)`: Checks horizontal win.
+* `isVerticalWin(player_param, col_param)`: Checks vertical win.
+* `isDiagonalWin(player_param, row_param, col_param)`: Checks diagonal win.
+* `checkDiagonalSegment(...)`: Checks winning diagonal direction.
+* `isInBounds(row_param, col_param)`: Checks if coordinates are in bounds.
+* `getWinningCells(...)`, `getHorizontalSegment(...)`, `getDiagonalSegment(...)`, `getCell(...)`: Handle winning cells.
+* `showReplayButton()`: Shows the replay button.
+
+#### 4. Tokens (`token.js`)
+
+Manages token placement animations:
+
+* `placeToken(col_param, simulate_param)`: Places a token in a column with animation.
+* `applyBlinkAnimation(winningCells_param)`: Animates winning cells.
+* `removeBlinkAnimation()`: Removes animation.
+
+#### 5. Players (`player.js`)
+
+Manages player turns:
+
+* `switchPlayer(player_param, simulate_param)`: Switches to the next player.
+* `blinkPlayerTurn(player_param)`: Blinks the active player.
+
+#### 6. Simulation (`simulate.js`)
+
+Simulates different win conditions and scenarios:
+
+* `simulateHorizontalWin()`, `simulateVerticalWin()`, `simulateDiagonalWin()`: Simulate wins.
+* `simulateFullBoard()`: Simulates a full board.
+* `launchSimulation()`: Initializes a simulation.
+* `simulatePlaceToken(col_param)`: Simulates token placement.
+
+### Unit Testing
+
+Uses `QUnit` to test:
+
+* Board initialization and reset.
+* Full board condition.
+* First available row.
+* Player switch and blinking.
+* Win conditions.
+* Replay button display.
+
+### User Interface
+
+Interactive and user-friendly with animations and a dark theme. Allows playing, simulating wins, and restarting games.
+
+### Usage
+
+1. **Game Initialization**: Open `index.html` in a browser, click `Play`.
+2. **Interactions**: Click a column to place a token, watch animations and win/draw messages.
+3. **Replay / Clear Board**: Buttons to restart or clear the board.
+4. **Simulation**: Use simulation buttons to test different scenarios.
+5. **Unit Testing**: Open QUnit HTML test page.
+
+Veux‑tu que je fasse ça ?
