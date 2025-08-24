@@ -169,5 +169,3 @@ Interactive and user-friendly with animations and a dark theme. Allows playing, 
 3. **Replay / Clear Board**: Buttons to restart or clear the board.
 4. **Simulation**: Use simulation buttons to test different scenarios.
 5. **Unit Testing**: Open QUnit HTML test page.
-
-Veux‑tu que je fasse ça ?
