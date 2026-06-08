@@ -1,171 +1,272 @@
-# FR
+# 🔴🟡 Puissance 4 — Connect Four Web
 
-## Puissance 4
-
-### Introduction
-
-Le projet Puissance 4 est une implémentation en JavaScript du célèbre jeu de stratégie « Puissance 4 ». Il a été conçu pour être utilisé dans un environnement web et offre des fonctionnalités telles que la simulation de parties, des tests unitaires et une interface utilisateur interactive.
-
-### Architecture
-
-#### 1. Variables (`variables.js`)
-
-Le fichier `variables.js` contient les variables globales utilisées dans le projet.
-
-#### 2. Plateau (`board.js`)
-
-Le fichier `board.js` contient les fonctions liées à la gestion du plateau de jeu. Les principales fonctionnalités comprennent :
-
-* `initializeBoard(rows_param, cols_param, simulate_param)` : Initialise le plateau de jeu avec un nombre spécifié de lignes et de colonnes.
-* `createCell(row_param, col_param)` : Crée un élément de cellule HTML avec les coordonnées spécifiées.
-* `viderPlateau(rows_param, cols_param)` : Vide le plateau de jeu avec une animation.
-* `resetBoard(rows_param, cols_param, simulate_param)` : Réinitialise le plateau de jeu avec les paramètres spécifiés.
-* `isBoardFull(rows_param, cols_param)` : Vérifie si le plateau est entièrement rempli.
-* `getAvailableRow(col_param, rows_param)` : Retourne la première ligne disponible dans une colonne donnée.
-
-#### 3. Jeu (`game.js`)
-
-Le fichier `game.js` contient les fonctions liées à la gestion du jeu. Les principales fonctionnalités :
-
-* `checkWin(player_param, row_param, col_param)` : Vérifie les conditions de victoire et met à jour le message de victoire.
-* `isHorizontalWin(player_param, row_param)` : Vérifie la condition de victoire horizontale.
-* `isVerticalWin(player_param, col_param)` : Vérifie la condition de victoire verticale.
-* `isDiagonalWin(player_param, row_param, col_param)` : Vérifie la condition de victoire diagonale.
-* `checkDiagonalSegment(...)` : Vérifie la direction de la diagonale gagnante.
-* `isInBounds(row_param, col_param)` : Vérifie si les coordonnées sont dans les limites.
-* `getWinningCells(...)`, `getHorizontalSegment(...)`, `getDiagonalSegment(...)`, `getCell(...)` : Gèrent les cellules gagnantes.
-* `showReplayButton()` : Affiche le bouton de rejouer.
-
-#### 4. Jetons (`token.js`)
-
-Gère l’animation des jetons lorsqu’ils sont placés sur le plateau :
-
-* `placeToken(col_param, simulate_param)` : Place un jeton dans la colonne avec animation.
-* `applyBlinkAnimation(winningCells_param)` : Anime les cellules gagnantes.
-* `removeBlinkAnimation()` : Supprime l’animation.
-
-#### 5. Joueurs (`player.js`)
-
-Gère le tour des joueurs :
-
-* `switchPlayer(player_param, simulate_param)` : Passe au joueur suivant.
-* `blinkPlayerTurn(player_param)` : Fait clignoter le joueur actif.
-
-#### 6. Simulation (`simulate.js`)
-
-Permet de simuler différentes conditions de victoire et situations :
-
-* `simulateHorizontalWin()`, `simulateVerticalWin()`, `simulateDiagonalWin()` : Simulent différentes victoires.
-* `simulateFullBoard()` : Simule un plateau plein.
-* `launchSimulation()` : Initialise une simulation.
-* `simulatePlaceToken(col_param)` : Simule le placement d’un jeton.
-
-### Tests Unitaires
-
-Le projet utilise `QUnit` pour tester :
-
-* L’initialisation et la réinitialisation du plateau.
-* La condition de plateau plein.
-* La recherche de la première ligne disponible.
-* Le changement de joueur et son clignotement.
-* Les conditions de victoire.
-* L’affichage du bouton rejouer.
-
-### Interface Utilisateur
-
-L’interface est conviviale et interactive, avec des animations et un thème sombre. Elle permet de jouer, simuler des victoires et recommencer une partie.
-
-### Utilisation
-
-1. **Initialisation du jeu** : Ouvrir `index.html` dans un navigateur, cliquer sur `Jouer`.
-2. **Interactions** : Cliquer sur une colonne pour placer un jeton, observer animations et messages de victoire ou match nul.
-3. **Rejouer / Vider le plateau** : Boutons pour recommencer ou vider le plateau.
-4. **Simulation** : Utiliser les boutons de simulation pour tester différentes conditions.
-5. **Tests Unitaires** : Ouvrir la page HTML des tests QUnit.
+> Implémentation web du jeu **Puissance 4** en **JavaScript Vanilla**, avec interface interactive, animations CSS, mode simulation et suite de tests unitaires **QUnit** intégrée.
 
 ---
 
-# EN
+## 📋 Table des matières
 
-## Connect 4
+- [Aperçu du projet](#aperçu-du-projet)
+- [Fonctionnalités](#fonctionnalités)
+- [Stack technique](#stack-technique)
+- [Structure du projet](#structure-du-projet)
+- [Architecture JavaScript](#architecture-javascript)
+- [Démarrage](#démarrage)
+- [Règles du jeu](#règles-du-jeu)
+- [Mode Simulation](#mode-simulation)
+- [Tests unitaires (QUnit)](#tests-unitaires-qunit)
+- [Variables globales](#variables-globales)
 
-### Introduction
+---
 
-The Connect 4 project is a JavaScript implementation of the popular strategy game “Connect 4.” It is designed for web environments and provides features such as game simulation, unit testing, and an interactive user interface.
+## Aperçu du projet
 
-### Architecture
+Puissance 4 est un jeu à deux joueurs qui s'affrontent en plaçant des jetons colorés (jaune / rouge) dans une grille **6 lignes × 7 colonnes**. Le premier joueur à aligner 4 jetons consécutifs — horizontalement, verticalement ou en diagonale — remporte la partie.
 
-#### 1. Variables (`variables.js`)
+Ce projet est une implémentation **100% front-end**, sans framework ni build tool : HTML, CSS et JavaScript purs, avec Bootstrap pour la mise en page et QUnit pour les tests. Il suffit d'ouvrir `html/game.html` dans un navigateur pour jouer.
 
-The `variables.js` file contains global variables used throughout the project.
+---
 
-#### 2. Board (`board.js`)
+## Fonctionnalités
 
-The `board.js` file contains functions for managing the game board. Main functionalities:
+- ✅ **Jeu en local à 2 joueurs** — Joueur 1 (🟡 jaune) vs Joueur 2 (🔴 rouge)
+- ✅ **Grille dynamique** — dimensions configurables via `initializeBoard(rows, cols)`
+- ✅ **Détection de victoire** : horizontale, verticale, diagonale (4 directions)
+- ✅ **Détection du match nul** — plateau complet sans vainqueur
+- ✅ **Animation des jetons** qui tombent dans la colonne
+- ✅ **Animation des cellules gagnantes** (clignotement)
+- ✅ **Indicateur de tour** — le panneau du joueur actif clignote
+- ✅ **Message de victoire** affiché en overlay
+- ✅ **Bouton Rejouer** et **Vider le plateau** avec animation
+- ✅ **Mode Simulation** — 4 scénarios préchargés pour tester les conditions de jeu
+- ✅ **Tests unitaires** QUnit accessibles directement depuis l'interface
+- ✅ **Thème sombre** — interface en dark mode
 
-* `initializeBoard(rows_param, cols_param, simulate_param)`: Initializes the game board with a specified number of rows and columns.
-* `createCell(row_param, col_param)`: Creates an HTML cell element with specified coordinates.
-* `viderPlateau(rows_param, cols_param)`: Clears the board with an animation.
-* `resetBoard(rows_param, cols_param, simulate_param)`: Resets the board with specified parameters.
-* `isBoardFull(rows_param, cols_param)`: Checks if the board is completely full.
-* `getAvailableRow(col_param, rows_param)`: Returns the first available row in a given column.
+---
 
-#### 3. Game (`game.js`)
+## Stack technique
 
-Contains game management functions:
+| Technologie | Version | Rôle |
+|---|---|---|
+| HTML5 | — | Structure des pages |
+| CSS3 | — | Styles, animations, CSS Custom Properties |
+| JavaScript | ES6+ | Logique de jeu (vanilla, sans framework) |
+| Bootstrap | inclus localement | Mise en page (`bootstrap/`) |
+| QUnit | inclus localement | Framework de tests unitaires (`qunit/`) |
 
-* `checkWin(player_param, row_param, col_param)`: Checks win conditions and updates win message.
-* `isHorizontalWin(player_param, row_param)`: Checks horizontal win.
-* `isVerticalWin(player_param, col_param)`: Checks vertical win.
-* `isDiagonalWin(player_param, row_param, col_param)`: Checks diagonal win.
-* `checkDiagonalSegment(...)`: Checks winning diagonal direction.
-* `isInBounds(row_param, col_param)`: Checks if coordinates are in bounds.
-* `getWinningCells(...)`, `getHorizontalSegment(...)`, `getDiagonalSegment(...)`, `getCell(...)`: Handle winning cells.
-* `showReplayButton()`: Shows the replay button.
+Aucune dépendance externe, aucun serveur requis. Bootstrap et QUnit sont embarqués dans le projet.
 
-#### 4. Tokens (`token.js`)
+---
 
-Manages token placement animations:
+## Structure du projet
 
-* `placeToken(col_param, simulate_param)`: Places a token in a column with animation.
-* `applyBlinkAnimation(winningCells_param)`: Animates winning cells.
-* `removeBlinkAnimation()`: Removes animation.
+```
+puissance4/
+│
+├── html/
+│   ├── index.html          # Page d'accueil — écran de démarrage
+│   ├── game.html           # Page de jeu principale
+│   └── tests.html          # Page des tests unitaires QUnit
+│
+├── js/
+│   ├── variables.js        # Variables globales partagées entre tous les modules
+│   ├── board.js            # Gestion du plateau (initialisation, reset, état)
+│   ├── game.js             # Logique de victoire (horizontal, vertical, diagonal)
+│   ├── token.js            # Placement et animation des jetons
+│   ├── player.js           # Gestion des tours joueurs
+│   ├── simulate.js         # Mode simulation (victoires préprogrammées)
+│   ├── main.js             # Point d'entrée — init + event listeners
+│   └── tests.js            # Suite de tests QUnit
+│
+├── css/
+│   └── style.css           # Styles personnalisés (dark theme, animations, grille)
+│
+├── img/
+│   ├── yellow_player.png   # Avatar Joueur 1
+│   └── red_player.png      # Avatar Joueur 2
+│
+├── bootstrap/              # Bootstrap CSS embarqué localement
+│   └── css/
+│       └── bootstrap.min.css
+│
+└── qunit/                  # QUnit embarqué localement
+    ├── css/
+    └── js/
+```
 
-#### 5. Players (`player.js`)
+---
 
-Manages player turns:
+## Architecture JavaScript
 
-* `switchPlayer(player_param, simulate_param)`: Switches to the next player.
-* `blinkPlayerTurn(player_param)`: Blinks the active player.
+Le projet adopte une **architecture modulaire à fichiers séparés** : chaque fichier JS encapsule une responsabilité précise. Tous les scripts sont chargés séquentiellement dans `game.html`, ce qui leur donne accès aux variables globales définies dans `variables.js`.
 
-#### 6. Simulation (`simulate.js`)
+```
+variables.js   ← état global partagé
+    │
+    ├── board.js      ← plateau (DOM + boardState[])
+    ├── game.js       ← logique de victoire
+    ├── token.js      ← animation jetons
+    ├── player.js     ← gestion des tours
+    ├── simulate.js   ← scénarios de simulation
+    └── main.js       ← initialisation + event listeners
+```
 
-Simulates different win conditions and scenarios:
+### `variables.js` — État global
 
-* `simulateHorizontalWin()`, `simulateVerticalWin()`, `simulateDiagonalWin()`: Simulate wins.
-* `simulateFullBoard()`: Simulates a full board.
-* `launchSimulation()`: Initializes a simulation.
-* `simulatePlaceToken(col_param)`: Simulates token placement.
+Centralise toutes les variables partagées entre les modules :
 
-### Unit Testing
+| Variable | Type | Description |
+|---|---|---|
+| `gameBoard` | HTMLElement | Référence à l'élément DOM du plateau |
+| `rows`, `cols` | number | Dimensions du plateau |
+| `currentPlayer` | number | Joueur actif (1 ou 2) |
+| `boardState` | number[][] | Matrice représentant l'état de chaque cellule (0 = vide, 1 = J1, 2 = J2) |
+| `gameWon` | boolean | Indique si la partie est terminée |
+| `simulationInProgress` | boolean | Bloque les interactions pendant une simulation |
+| `animationInProgress` | boolean | Bloque les clics pendant une animation |
+| `timing` | number | Délai cumulatif pour les animations séquentielles |
+| `timingIncrement` | number | Incrément de délai entre chaque jeton animé (150ms) |
+| `direction` | number | Direction de la diagonale gagnante |
 
-Uses `QUnit` to test:
+### `board.js` — Plateau de jeu
 
-* Board initialization and reset.
-* Full board condition.
-* First available row.
-* Player switch and blinking.
-* Win conditions.
-* Replay button display.
+| Fonction | Description |
+|---|---|
+| `initializeBoard(rows, cols, simulate?)` | Crée la grille DOM et initialise `boardState` |
+| `createCell(row, col)` | Génère un élément `<div class="cell">` avec `data-row` et `data-col` |
+| `viderPlateau(rows, cols)` | Vide le plateau avec animation, puis appelle `resetBoard` |
+| `resetBoard(rows, cols, simulate?)` | Réinitialise l'état du jeu (board, joueur, messages) |
+| `isBoardFull(rows, cols)` | Retourne `true` si toutes les cellules sont occupées |
+| `getAvailableRow(col, rows)` | Retourne la ligne disponible la plus basse dans une colonne (`-1` si pleine) |
 
-### User Interface
+### `game.js` — Logique de victoire
 
-Interactive and user-friendly with animations and a dark theme. Allows playing, simulating wins, and restarting games.
+| Fonction | Description |
+|---|---|
+| `checkWin(player, row, col)` | Vérifie toutes les conditions de victoire et retourne `{type, cells}` |
+| `isHorizontalWin(player, row)` | Détecte une victoire horizontale |
+| `isVerticalWin(player, col)` | Détecte une victoire verticale |
+| `isDiagonalWin(player, row, col)` | Détecte une victoire diagonale (↗ et ↘) |
+| `checkDiagonalSegment(...)` | Vérifie un segment diagonal dans une direction donnée |
+| `isInBounds(row, col)` | Vérifie que les coordonnées sont dans les limites de la grille |
+| `getWinningCells(...)` | Retourne les 4 cellules DOM formant l'alignement gagnant |
+| `getHorizontalSegment(...)` | Extrait les cellules d'un segment horizontal |
+| `getDiagonalSegment(...)` | Extrait les cellules d'un segment diagonal |
+| `getCell(row, col)` | Retourne la cellule DOM à la position `(row, col)` |
+| `showReplayButton()` | Affiche le bouton rejouer et réactive le plateau |
 
-### Usage
+### `token.js` — Jetons & animations
 
-1. **Game Initialization**: Open `index.html` in a browser, click `Play`.
-2. **Interactions**: Click a column to place a token, watch animations and win/draw messages.
-3. **Replay / Clear Board**: Buttons to restart or clear the board.
-4. **Simulation**: Use simulation buttons to test different scenarios.
-5. **Unit Testing**: Open QUnit HTML test page.
+| Fonction | Description |
+|---|---|
+| `placeToken(col, simulate?)` | Place un jeton dans la colonne avec animation de chute |
+| `applyBlinkAnimation(winningCells)` | Fait clignoter les 4 cellules gagnantes |
+| `removeBlinkAnimation()` | Supprime l'animation de clignotement |
+
+### `player.js` — Tours joueurs
+
+| Fonction | Description |
+|---|---|
+| `switchPlayer(player, simulate?)` | Passe au joueur suivant et met à jour l'UI |
+| `blinkPlayerTurn(player)` | Fait clignoter le panneau du joueur actif, masque l'autre |
+
+### `simulate.js` — Mode simulation
+
+| Fonction | Description |
+|---|---|
+| `simulateHorizontalWin()` | Simule une victoire horizontale (4 jetons en ligne) |
+| `simulateVerticalWin()` | Simule une victoire verticale (4 jetons en colonne) |
+| `simulateDiagonalWin()` | Simule une victoire diagonale |
+| `simulateFullBoard()` | Simule un match nul (plateau plein) |
+| `launchSimulation()` | Réinitialise l'état pour lancer une simulation |
+| `simulatePlaceToken(col)` | Place un jeton en mode simulation (sans interaction joueur) |
+
+### `main.js` — Point d'entrée
+
+```javascript
+initializeBoard(6, 7);  // Grille standard 6×7
+
+buttonSimulateHorizontal.addEventListener("click", simulateHorizontalWin);
+buttonSimulateVertical.addEventListener("click", simulateVerticalWin);
+buttonSimulateDiagonal.addEventListener("click", simulateDiagonalWin);
+buttonSimulateFullBoard.addEventListener("click", simulateFullBoard);
+buttonReset.addEventListener("click", () => viderPlateau(rows, cols));
+replayButton.addEventListener("click", () => viderPlateau(rows, cols));
+```
+
+---
+
+## Démarrage
+
+Aucun serveur, aucune installation requise.
+
+```bash
+git clone https://github.com/NicolasMineo13/puissance4.git
+cd puissance4
+```
+
+Ouvrir directement dans un navigateur :
+
+```
+html/index.html   → Page d'accueil
+html/game.html    → Jeu (accès direct possible)
+html/tests.html   → Tests unitaires QUnit
+```
+
+> ⚠️ Certains navigateurs bloquent le chargement de fichiers JS locaux depuis `file://` (CORS). Si les scripts ne se chargent pas, lancez un serveur local minimal :
+>
+> ```bash
+> # Python 3
+> python -m http.server 8080
+> # puis ouvrir http://localhost:8080/html/game.html
+> ```
+
+---
+
+## Règles du jeu
+
+1. Le **Joueur 1** (🟡 jaune) commence toujours.
+2. Les joueurs jouent à tour de rôle en **cliquant sur une colonne** — le jeton tombe à la case la plus basse disponible.
+3. Le premier joueur à aligner **4 jetons consécutifs** (horizontalement, verticalement ou en diagonale) gagne.
+4. Si le plateau est plein sans alignement de 4, c'est un **match nul**.
+5. Après une victoire ou un match nul, le bouton **Rejouer** apparaît pour relancer une partie.
+
+---
+
+## Mode Simulation
+
+L'interface propose 5 boutons de simulation accessibles en bas de l'écran de jeu :
+
+| Bouton | Scénario simulé |
+|---|---|
+| **Victoire horizontale** | 4 jetons alignés sur une ligne |
+| **Victoire verticale** | 4 jetons alignés en colonne |
+| **Victoire diagonale** | 4 jetons alignés en diagonale |
+| **Match nul** | Plateau entièrement rempli sans vainqueur |
+| **Vider le plateau** | Réinitialisation immédiate avec animation |
+
+Les simulations s'animent automatiquement avec le même système de délais que le jeu réel (`timingIncrement = 150ms` par jeton).
+
+---
+
+## Tests unitaires (QUnit)
+
+Ouvrir `html/tests.html` dans un navigateur pour exécuter les tests.
+
+QUnit est embarqué localement dans `qunit/` — aucune connexion internet requise.
+
+### Couverture des tests (`js/tests.js`)
+
+| Test | Assertions vérifiées |
+|---|---|
+| `initializeBoard` | Dimensions CSS (`--rows`, `--cols`), taille de `boardState`, joueur initial, état `gameWon`, messages des joueurs, nombre de cellules DOM |
+| `createCell` | Type HTMLElement, classe `cell`, attributs `data-row` et `data-col` |
+| `resetBoard` | Visibilité du bouton rejouer, message de victoire vide, dimensions, `timing` remis à 0 |
+| `isBoardFull` | Plateau non plein avec cases vides, plateau plein avec `boardState` rempli |
+| `getAvailableRow` | Retourne la bonne ligne disponible, retourne `-1` si colonne pleine |
+| `swapPlayerTurn` | Passage de joueur 1 → 2 → 1 |
+| `blinkPlayerTurn` | Visibilité des labels et clignotement des panneaux pour J1 et J2 |
+| `checkWin (horizontal)` | Détection type `"horizontal"`, 4 cellules gagnantes |
+| `checkWin (vertical)` | Détection type `"vertical"`, 4 cellules gagnantes |
+| `checkWin (diagonal)` | Détection type `"diagonal"`, 4 cellules gagnantes |
+| `showReplayButton` | Visibilité du bouton, `simulationInProgress = false`, `pointerEvents = "auto"` |
